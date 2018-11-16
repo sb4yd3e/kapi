@@ -2,7 +2,7 @@ from kapi import validators
 from kapi.codecs import BaseCodec
 from kapi.parse import parse_yaml
 
-TOMYUM_CONFIG = validators.Object(
+KAPI_CONFIG = validators.Object(
     properties=[
         ('schema', validators.Object(
             properties=[
@@ -29,4 +29,4 @@ class ConfigCodec(BaseCodec):
     format = 'kapi'
 
     def decode(self, content, **options):
-        return parse_yaml(content, validator=TOMYUM_CONFIG)
+        return parse_yaml(content, validator=KAPI_CONFIG)
