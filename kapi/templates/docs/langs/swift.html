@@ -1,0 +1,36 @@
+<pre class="highlight swift {% if not is_selected %}d-none{% endif %}" data-language="swift"><code>var url : String = "{{ link.url }}"{% raw %}
+{% endraw %}var request : NSMutableURLRequest = NSMutableURLRequest()
+request.URL = NSURL(string: url)
+request.HTTPMethod = "{{ link.method.upper() }}"
+
+{%- if link.get_query_fields() %}
+let params = {
+{% for field in link.get_query_fields() %}    "{{ field.name }}": ...{% if not loop.last %},{% endif %}
+{% endfor %}}
+{% endif %}
+{%- if link.get_body_field() and not link.get_expanded_body() %}data = ...
+{% endif %}
+{%- if link.get_body_field() and link.get_expanded_body() %}data = {
+{% for key, schema in link.get_expanded_body().items() %}    "{{ key }}": ...{% if not loop.last %},{% endif %}
+{% endfor %}}
+{% endif %}
+response = requests.{{ link.method.lower() }}(url{% if link.get_query_fields() %}, params=params{% endif %}{% if link.get_body_field() %}, json=data{% endif %})
+NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler:{ (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+	var error: AutoreleasingUnsafeMutablePointer<NSError?> = nil\n
+	let jsonResult: NSDictionary! = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: error) as? NSDictionary
+	if (jsonResult != nil) {
+		// process jsonResult
+	} else {
+		// couldn't load JSON, look at error
+	}
+})
+</code></pre>
+
+
+
+
+
+
+
+
+

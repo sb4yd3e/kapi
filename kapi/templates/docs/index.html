@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>{{ document.title|default('Tom Yum', True) }}</title>
+
+        <link href="{{ static_url('kapi/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ static_url('kapi/css/font-awesome-4.0.3.css') }}" rel="stylesheet">
+        <link href="{{ static_url('kapi/css/base.css') }}" rel="stylesheet">
+        <link href="{{ static_url('kapi/css/jquery.json-view.min.css') }}" rel="stylesheet">
+        <link href="{{ static_url('kapi/css/highlight.css') }}" rel="stylesheet">
+        <link href="{{ static_url('kapi/img/favicon.ico') }}" rel="shortcut icon">
+
+
+
+
+
+        {% if code_style %}<style>{{ code_style }}</style>{% endif %}
+
+    </head>
+
+    <body data-spy="scroll" data-target="#sidebar-nav" data-offset="50">
+
+        {% include 'kapi/docs/layout/sidebar.html' %}
+
+        <div class="container" id="main">
+            <div class="row">
+                <div class="col-md-12 main-container">
+                    {% include 'kapi/docs/layout/content.html' %}
+                </div>
+            </div>
+        </div>
+
+        {% include 'kapi/docs/auth/token.html' %}
+        {% include 'kapi/docs/auth/basic.html' %}
+        {% include 'kapi/docs/auth/session.html' %}
+
+        <script src="{{ static_url('kapi/js/jquery-1.10.2.min.js') }}"></script>
+        <script src="{{ static_url('kapi/js/bootstrap.min.js') }}"></script>
+        <script src="{{ static_url('kapi/js/highlight.pack.js') }}"></script>
+        <script language="JavaScript">
+            hljs.initHighlightingOnLoad();
+            // Language Control
+            $(document).ready(function () {
+
+                $('#language-control li').click(function (event) {
+                    event.preventDefault();
+                    var $languageMenuItem = $(this).find('a');
+                    var $languageControls = $(this).closest('ul').find('li');
+                    var $languageControlLinks = $languageControls.find('a');
+                    var language = $languageMenuItem.data('language');
+
+                    $languageControlLinks.not('[data-language="' + language + '"]').removeClass('active');
+                    $languageControlLinks.filter('[data-language="' + language + '"]').addClass('active');
+
+                    $('#selected-language').text(language);
+
+                    var $codeBlocks = $('pre.highlight');
+                    $codeBlocks.not('[data-language="' + language + '"]').addClass('d-none')
+                    $codeBlocks.filter('[data-language="' + language + '"]').removeClass('d-none')
+                });
+
+                $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,3 @@
+{% for name, child in field.properties.items() %}
+    {{ child.render_to_html('kapi/forms', name=name) }}
+{% endfor %}
