@@ -2,7 +2,8 @@ import datetime
 
 import pytest
 
-from apistar import exceptions, types, validators
+from kapi import exceptions, types, validators
+from kapi.utils import encode_jsonschema
 
 utc = datetime.timezone.utc
 
@@ -18,6 +19,7 @@ class ReviewedProduct(Product):
 
 
 class Instance():
+
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -147,9 +149,7 @@ def test_setattr():
     # Set with an invalid value.
     with pytest.raises(exceptions.ValidationError) as exc:
         product.name = None
-    assert exc.value.as_dict() == {
-        None: 'May not be null.'
-    }
+    assert exc.value.detail == 'May not be null.'
 
 
 def test_setitem():
@@ -184,7 +184,7 @@ def test_setitem():
     # Set with an invalid value.
     with pytest.raises(exceptions.ValidationError) as exc:
         product['name'] = None
-    assert exc.value.messages[0].text == 'May not be null.'
+    assert exc.value.detail == 'May not be null.'
 
 
 def test_misc():
@@ -207,9 +207,80 @@ def test_misc():
 
 
 def test_reserved_keys():
-    with pytest.raises(AssertionError):
+    with pytest.raises(exceptions.ConfigurationError):
         class Something(types.Type):
             keys = validators.String()
+
+
+def test_as_jsonschema():
+    struct = encode_jsonschema(Product, to_data_structure=True)
+    assert struct == {
+        "$ref": "#/definitions/Product",
+        "definitions": {
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 10
+                    },
+                    "rating": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 100,
+                        "default": None,
+                        "nullable": True
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "required": [
+                    "name",
+                    "created"
+                ]
+            }
+        }
+    }
+
+
+def test_extended_as_jsonschema_flat():
+    struct = encode_jsonschema(ReviewedProduct, to_data_structure=True)
+    assert struct == {
+        "$ref": "#/definitions/ReviewedProduct",
+        "definitions": {
+            "ReviewedProduct": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 10
+                    },
+                    "rating": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 100,
+                        "default": None,
+                        "nullable": True
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "reviewer": {
+                        "type": "string",
+                        "maxLength": 20
+                    }
+                },
+                "required": [
+                    "name",
+                    "created",
+                    "reviewer"
+                ]
+            }
+        }
+    }
 
 
 class Location(types.Type):

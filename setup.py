@@ -51,27 +51,28 @@ def get_long_description(long_description_file):
     return long_description
 
 
-
-version = get_version('apistar')
+version = get_version('kapi')
 
 
 setup(
-    name='apistar',
+    name='kapi',
     version=version,
-    url='https://docs.apistar.com/',
+    url='https://github.com/Cookly/kapi/',
     license='BSD',
-    description='API documentation, validation, mocking, and clients.',
+    description='Python Rapid RESTFul APIs development framework',
     long_description=get_long_description('README.md'),
     long_description_content_type='text/markdown',
-    author='Tom Christie',
-    author_email='tom@tomchristie.com',
-    packages=get_packages('apistar'),
-    package_data=get_package_data('apistar'),
+    author='Kowit Charoenratchatabhan',
+    author_email='kowit@cookly.me',
+    packages=get_packages('kapi'),
+    package_data=get_package_data('kapi'),
     install_requires=[
         'click',
         'jinja2',
         'requests',
         'pyyaml',
+        'werkzeug',
+        'whitenoise'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -89,7 +90,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'apistar=apistar:cli'
+            'kapi=kapi:main'
         ],
     },
 )

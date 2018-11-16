@@ -1,5 +1,7 @@
 Copyright © 2017-present, [Encode OSS Ltd](http://www.encode.io/).
 All rights reserved.
+Copyright © 2018 Kowit Charoenratchatabhan
+
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:

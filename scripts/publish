@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-export VERSION=`cat apistar/__init__.py | grep __version__ | sed "s/__version__ = //" | sed "s/'//g"`
+export VERSION=`cat kapi/__init__.py | grep __version__ | sed "s/__version__ = //" | sed "s/'//g"`
 export PREFIX=""
 if [ -d 'venv' ] ; then
     export PREFIX="venv/bin/"
@@ -12,8 +12,8 @@ if ! command -v "${PREFIX}twine" &>/dev/null ; then
     exit 1
 fi
 
-find apistar -type f -name "*.py[co]" -delete
-find apistar -type d -name __pycache__ -delete
+find kapi -type f -name "*.py[co]" -delete
+find kapi -type d -name __pycache__ -delete
 
 ${PREFIX}python setup.py sdist
 ${PREFIX}twine upload dist/*

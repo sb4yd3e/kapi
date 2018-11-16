@@ -1,5 +1,4 @@
-from apistar.tokenize.tokenize_yaml import tokenize_yaml
-from apistar.tokenize.tokens import DictToken, ListToken, ScalarToken
+from kapi.tokenize import DictToken, ListToken, ScalarToken, tokenize_yaml
 
 YAML_OBJECT = '''
 a:

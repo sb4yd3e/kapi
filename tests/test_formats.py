@@ -2,7 +2,7 @@ import datetime
 
 import pytest
 
-from apistar import exceptions, types, validators
+from kapi import exceptions, types, validators
 
 UTC = datetime.timezone.utc
 
@@ -25,11 +25,11 @@ def test_date():
 
     with pytest.raises(exceptions.ValidationError) as exc:
         Example({'when': 'abc'})
-    assert exc.value.as_dict() == {'when': 'Must be a valid date.'}
+    assert exc.value.detail == {'when': 'Must be a valid date.'}
 
     with pytest.raises(exceptions.ValidationError) as exc:
         Example({'when': None})
-    assert exc.value.as_dict() == {'when': 'May not be null.'}
+    assert exc.value.detail == {'when': 'May not be null.'}
 
 
 def test_nullable_date():
@@ -61,11 +61,11 @@ def test_time():
 
     with pytest.raises(exceptions.ValidationError) as exc:
         Example({'when': 'abc'})
-    assert exc.value.as_dict() == {'when': 'Must be a valid time.'}
+    assert exc.value.detail == {'when': 'Must be a valid time.'}
 
     with pytest.raises(exceptions.ValidationError) as exc:
         Example({'when': None})
-    assert exc.value.as_dict() == {'when': 'May not be null.'}
+    assert exc.value.detail == {'when': 'May not be null.'}
 
 
 def test_nullable_time():
@@ -97,11 +97,11 @@ def test_datetime():
 
     with pytest.raises(exceptions.ValidationError) as exc:
         Example({'when': 'abc'})
-    assert exc.value.as_dict() == {'when': 'Must be a valid datetime.'}
+    assert exc.value.detail == {'when': 'Must be a valid datetime.'}
 
     with pytest.raises(exceptions.ValidationError) as exc:
         Example({'when': None})
-    assert exc.value.as_dict() == {'when': 'May not be null.'}
+    assert exc.value.detail == {'when': 'May not be null.'}
 
     example = Example({
         'when': '2020-01-01T12:00:00-02:00'
