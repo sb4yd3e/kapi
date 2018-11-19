@@ -1,41 +1,35 @@
 <div style="float: right">
-    <a href="https://travis-ci.org/encode/apistar"><img style="border: none; background-color: transparent; margin: 0" alt="Build Status" src="https://travis-ci.org/encode/apistar.svg?branch=master"></a>
-    <a href="https://codecov.io/gh/encode/apistar"><img style="border: none; background-color: transparent; margin: 0" alt="codecov" src="https://codecov.io/gh/encode/apistar/branch/master/graph/badge.svg"></a>
-    <a href="https://pypi.python.org/pypi/apistar"><img style="border: none; background-color: transparent; margin: 0" alt="Package version" src="https://badge.fury.io/py/apistar.svg"></a>
+    <a href="https://travis-ci.org/encode/kapi"><img style="border: none; background-color: transparent; margin: 0" alt="Build Status" src="https://travis-ci.org/encode/kapi.svg?branch=master"></a>
+    <a href="https://codecov.io/gh/encode/kapi"><img style="border: none; background-color: transparent; margin: 0" alt="codecov" src="https://codecov.io/gh/encode/kapi/branch/master/graph/badge.svg"></a>
+    <a href="https://pypi.python.org/pypi/kapi"><img style="border: none; background-color: transparent; margin: 0" alt="Package version" src="https://badge.fury.io/py/kapi.svg"></a>
 </div>
 
-# API Star
+# KAPI
 
 A smart Web API framework, designed for Python 3.
 
-<!-- [![Build Status](https://travis-ci.org/encode/apistar.svg?branch=master)](https://travis-ci.org/encode/apistar)
-[![codecov](https://codecov.io/gh/encode/apistar/branch/master/graph/badge.svg)](https://codecov.io/gh/encode/apistar)
-[![Package version](https://badge.fury.io/py/apistar.svg)](https://pypi.python.org/pypi/apistar) -->
-
-**Community:** [https://discuss.apistar.org/](https://discuss.apistar.org/) 🤔 💭 🤓 💬 😎
-
-**Repository**: [https://github.com/encode/apistar](https://github.com/encode/apistar) 💻
+**Repository**: [https://github.com/Cookly/kapi](https://github.com/Cookly/kapi) 💻
 
 ---
 
 ## Quickstart
 
-Install API Star:
+Install KAPI:
 
 ```bash
-$ pip3 install apistar
+$ pip3 install kapi
 ```
 
 Create a new project in `app.py`:
 
 ```python
-from apistar import App, Route
+from kapi import App, Route
 
 
 def welcome(name=None):
     if name is None:
-        return {'message': 'Welcome to API Star!'}
-    return {'message': 'Welcome to API Star, %s!' % name}
+        return {'message': 'Welcome to KAPI!'}
+    return {'message': 'Welcome to KAPI, %s!' % name}
 
 
 routes = [
